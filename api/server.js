@@ -64,4 +64,16 @@ server.put("/actions/:id", (req, res) => {
     });
 });
 
+server.delete("/actions/:id", (req, res) => {
+  const { id } = req.params;
+  actions
+    .remove(id)
+    .then(count => {
+      res.status(200).json(count);
+    })
+    .catch(err => {
+      res.status(500).json({ message: "error deleting the action", err });
+    });
+});
+
 module.exports = server;
