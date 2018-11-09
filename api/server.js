@@ -116,4 +116,21 @@ server.post("/projects", (req, res) => {
       res.status(500).json({ message: "There was a error creating a new action" });
     });
 });
+
+server.put("/projects/:id", (req, res) => {
+  const { id } = req.params;
+  const changes = req.body;
+  projects
+    .update(id, changes)
+    .then(count => {
+      if (count) {
+        res.status(200).json({ message: `number of projects updated: ${count}` });
+      } else {
+        res.status(500).json({ message: "error updating the project" });
+      }
+    })
+    .catch(err => {
+      res.status(500).json({ message: "There was a error updating the project", err });
+    });
+});
 module.exports = server;
