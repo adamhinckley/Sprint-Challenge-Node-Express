@@ -47,4 +47,21 @@ server.post("/actions", (req, res) => {
     });
 });
 
+server.put("/actions/:id", (req, res) => {
+  const { id } = req.params;
+  const changes = req.body;
+  actions
+    .update(id, changes)
+    .then(count => {
+      if (count) {
+        res.status(200).json({ message: `number of actions updated: ${count}` });
+      } else {
+        res.status(500).json({ message: "error updating the action" });
+      }
+    })
+    .catch(err => {
+      res.status(500).json({ message: "There was a error creating a new action", err });
+    });
+});
+
 module.exports = server;
