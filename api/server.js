@@ -146,4 +146,21 @@ server.delete("/projects/:id", (req, res) => {
     });
 });
 
+server.get("/projects/actions/:id", (req, res) => {
+  const { id } = req.params;
+  console.log("get with ID", req.params);
+  projects
+    .getProjectActions(id)
+    .then(actions => {
+      if (actions) {
+        res.status(200).json(actions);
+      } else {
+        res.status(404).json({ message: "the project actions with the specified ID do not exist" });
+      }
+    })
+    .catch(err => {
+      res.status(500).json({ message: "The project actions info could not be received", err });
+    });
+});
+
 module.exports = server;
