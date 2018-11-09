@@ -1,10 +1,12 @@
 const express = require("express");
 const actions = require("../data/helpers/actionModel");
 const projects = require("../data/helpers/projectModel");
+const cors = require("cors");
 
 const server = express();
 
 server.use(express.json());
+server.use(cors({ origin: "http://localhost:3000" }));
 
 //endpoints for actions
 
@@ -21,7 +23,6 @@ server.get("/actions", (req, res) => {
 
 server.get("/actions/:id", (req, res) => {
   const { id } = req.params;
-  console.log("get with ID", req.params);
   actions
     .get(id)
     .then(action => {
@@ -91,7 +92,6 @@ server.get("/projects", (req, res) => {
 
 server.get("/projects/:id", (req, res) => {
   const { id } = req.params;
-  console.log("get with ID", req.params);
   projects
     .get(id)
     .then(project => {
@@ -148,7 +148,6 @@ server.delete("/projects/:id", (req, res) => {
 
 server.get("/projects/actions/:id", (req, res) => {
   const { id } = req.params;
-  console.log("get with ID", req.params);
   projects
     .getProjectActions(id)
     .then(actions => {
