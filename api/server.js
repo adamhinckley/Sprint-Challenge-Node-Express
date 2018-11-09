@@ -36,4 +36,15 @@ server.get("/actions/:id", (req, res) => {
     });
 });
 
+server.post("/actions", (req, res) => {
+  actions
+    .insert(req.body)
+    .then(action => {
+      res.status(201).json(action);
+    })
+    .catch(err => {
+      res.status(500).json({ message: "There was a error creating a new action" });
+    });
+});
+
 module.exports = server;
