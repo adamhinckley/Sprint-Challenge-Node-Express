@@ -76,4 +76,34 @@ server.delete("/actions/:id", (req, res) => {
     });
 });
 
+//endpoints for projects
+
+server.get("/projects", (req, res) => {
+  projects
+    .get()
+    .then(projects => {
+      res.status(200).json(projects);
+    })
+    .catch(err => {
+      res.status(500).json({ message: "the project info could not be received", err });
+    });
+});
+
+server.get("/projects/:id", (req, res) => {
+  const { id } = req.params;
+  console.log("get with ID", req.params);
+  projects
+    .get(id)
+    .then(project => {
+      if (project) {
+        res.status(200).json(project);
+      } else {
+        res.status(404).json({ message: "the action with the specified ID does not exist" });
+      }
+    })
+    .catch(err => {
+      res.status(500).json({ message: "The action info could not be received", err });
+    });
+});
+
 module.exports = server;
