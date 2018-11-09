@@ -133,4 +133,17 @@ server.put("/projects/:id", (req, res) => {
       res.status(500).json({ message: "There was a error updating the project", err });
     });
 });
+
+server.delete("/projects/:id", (req, res) => {
+  const { id } = req.params;
+  actions
+    .remove(id)
+    .then(count => {
+      res.status(200).json(count);
+    })
+    .catch(err => {
+      res.status(500).json({ message: "error deleting the project", err });
+    });
+});
+
 module.exports = server;
